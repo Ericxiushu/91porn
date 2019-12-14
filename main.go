@@ -19,17 +19,18 @@ const (
 )
 
 var (
-	saveDir = "/91porn/video"
+	saveDir = ""
 
 	jsContent = ""
 
 	cfg = &Config{}
 
-	defaultConfg = `{"port":8888,"domain":"627.workarea8.live","md5js":"https://627.workarea8.live/js/md5.js","aria2":{"uri":"http://172.17.0.1:6800/jsonrpc","token":"aabbccdd"},"pageType":"rf","pages":{"hot":"当前最热","rp":"最近得分","long":"10分钟以上","md":"本月讨论","tf":"本月收藏","mf":"收藏最多","rf":"最近加精","top":"本月最热"}}`
+	defaultConfg = `{"port":8888,"domain":"627.workarea8.live","md5js":"https://627.workarea8.live/js/md5.js","saveDir":"/data/91porn","aria2":{"uri":"http://172.17.0.1:6800/jsonrpc","token":"aabbccdd"},"pageType":"rf","pages":{"hot":"当前最热","rp":"最近得分","long":"10分钟以上","md":"本月讨论","tf":"本月收藏","mf":"收藏最多","rf":"最近加精","top":"本月最热"}}`
 )
 
 type Config struct {
 	Domain   string            `json:"domain"`
+	SaveDir  string            `json:"saveDir"`
 	Port     int               `json:"port"`
 	Md5js    string            `json:"md5js"`
 	PageType string            `json:"pageType"`
@@ -55,20 +56,24 @@ func init() {
 
 	rand.Seed(time.Now().Unix())
 
-	ok, err := PathExists(saveDir)
+	initConf()
+	initJs()
+	initDir()
+
+}
+
+func initDir() {
+	ok, err := PathExists(cfg.SaveDir)
 	if err != nil {
 		panic(err)
 	}
 
 	if !ok {
-		err = os.MkdirAll(saveDir, os.ModePerm)
+		err = os.MkdirAll(cfg.SaveDir, os.ModePerm)
 		if err != nil {
 			panic(err)
 		}
 	}
-
-	initConf()
-	initJs()
 }
 
 func initConf() {

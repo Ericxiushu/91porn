@@ -19,6 +19,7 @@ config file: /91porn/conf/conf.json
     "port": 8888,
     "domain": "91porn.com",
     "md5js": "https://91porn.com/js/md5.js",
+    "saveDir": "/91porn/video",
     "aria2":{
         "uri":"http://127.0.0.1:6800/jsonrpc",
         "token":"abcd"

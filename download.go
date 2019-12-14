@@ -22,7 +22,8 @@ func sendToAria2(content Content, wg *sync.WaitGroup) {
 
 	videoFileName := fmt.Sprintf("%s.mp4", content.title)
 
-	videoFile := path.Join(saveDir, videoFileName)
+	videoFile := path.Join(cfg.SaveDir, videoFileName)
+	fmt.Println("download video to ", videoFile)
 	if isExist(videoFile) {
 		fmt.Printf("video %s is exist \n", videoFile)
 		return
@@ -34,7 +35,7 @@ func sendToAria2(content Content, wg *sync.WaitGroup) {
 		return
 	}
 
-	_, err = client.AddURI(content.videoURL, map[string]string{"out": videoFileName, "dir": saveDir})
+	_, err = client.AddURI(content.videoURL, map[string]string{"out": videoFileName, "dir": cfg.SaveDir})
 	if err != nil {
 		fmt.Printf("add file %s to aria2 fail : %v , url : %s \n", content.title, err, content.videoURL)
 		return
@@ -88,7 +89,7 @@ func downloadFile(url string, fileName string, c chan int) {
 func downloadContent(content Content, c chan int) {
 	fmt.Println("begin download " + content.title)
 
-	basePath := fmt.Sprintf("%s/%s/", saveDir, content.title)
+	basePath := fmt.Sprintf("%s/%s/", cfg.SaveDir, content.title)
 	basePath = strings.Replace(basePath, "\n", "", -1)
 	basePath = strings.Replace(basePath, " ", "", -1)
 
