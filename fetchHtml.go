@@ -140,7 +140,14 @@ func fetchFromJS(jsStr string) string {
 	reg := regexp.MustCompile(dd)
 
 	if reg.NumSubexp() == 2 {
-		return reg.FindStringSubmatch(v.String())[1]
+		list := reg.FindStringSubmatch(v.String())
+		if len(list) >= 2 {
+			return list[1]
+		}
+
+		fmt.Printf("FindStringSubmatch error , list %v \n", list)
+
+		return ""
 	}
 
 	return ""
