@@ -167,6 +167,8 @@ func getContent(url string, content *Content) {
 	t := doc.Find("div#viewvideo-title")
 	title := t.Text()
 	title = strings.TrimSpace(title)
-	content.title = title
-	//fmt.Println(title)
+	if len(title) > 0 {
+		content.title = title
+		//fmt.Println(title)
+	}
 }

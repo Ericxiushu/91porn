@@ -26,7 +26,7 @@ var (
 
 	cfg = &Config{}
 
-	defaultConfg = `{"port":8888,"domain":"1003.workarea8.live","md5js":"https://1003.workarea8.live/js/md5.js","saveDir":"/data/91porn","aria2":{"uri":"http://172.17.0.1:6800/jsonrpc","token":"aabbccdd"},"pageType":"rf","pages":{"hot":"当前最热","rp":"最近得分","long":"10分钟以上","md":"本月讨论","tf":"本月收藏","mf":"收藏最多","rf":"最近加精","top":"本月最热"}}`
+	defaultConfg = `{"port":8888,"domain":"1003.workarea8.live","md5js":"http://1003.workarea8.live/js/m.js","saveDir":"/data/91porn","aria2":{"uri":"http://127.0.0.1:6800/jsonrpc","token":"aabbccdd"},"pageType":"rf","pages":{"hot":"当前最热","rp":"最近得分","long":"10分钟以上","md":"本月讨论","tf":"本月收藏","mf":"收藏最多","rf":"最近加精","top":"本月最热"}}`
 )
 
 type Config struct {
@@ -93,6 +93,8 @@ func initConf() {
 		panic(err)
 	}
 
+	fmt.Println("load conf succ")
+
 }
 
 /// 获取远端服务器的列表页面
@@ -105,7 +107,7 @@ func getPage(pageURL string, contents *[]Content) {
 		return
 	}
 
-	var contentURLs []string
+	var content Content
 
 	// 获取内容页面的访问入口url
 	doc.Find(".row a").Each(func(index int, item *goquery.Selection) {
@@ -116,20 +118,20 @@ func getPage(pageURL string, contents *[]Content) {
 			return
 		}
 		if title != "" {
-			contentURLs = append(contentURLs, link)
+			content = Content{
+				contentURL: link,
+				title:      title,
+			}
+			*contents = append(*contents, content)
 		}
 	})
 
 	// 遍历内容页面
-	var content Content
-	for i := 0; i < len(contentURLs); i++ {
-		fmt.Printf("fetch %d detail page : %s\n", i, contentURLs[i])
-		content = Content{}
-		content.contentURL = contentURLs[i]
-
-		getContent(contentURLs[i], &content)
-		*contents = append(*contents, content)
+	for k, v := range *contents {
+		fmt.Printf("fetch %d detail page : %s\n", k, v.contentURL)
+		getContent(v.contentURL, &(*contents)[k])
 	}
+
 }
 
 /// 爬虫

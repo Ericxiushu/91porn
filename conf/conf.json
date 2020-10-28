@@ -1,7 +1,7 @@
 {
     "port": 8888,
-    "domain": "627.workarea8.live",
-    "md5js": "https://627.workarea8.live/js/md5.js",
+    "domain": "1003.workarea8.live",
+    "md5js": "https://1003.workarea8.live/js/md5.js",
     "saveDir": "/data/91porn",
     "aria2": {
         "uri": "http://192.168.1.19:6800/jsonrpc",
