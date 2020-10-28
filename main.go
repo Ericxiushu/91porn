@@ -5,13 +5,14 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/PuerkitoBio/goquery"
 	"io/ioutil"
 	"math/rand"
 	"os"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/PuerkitoBio/goquery"
 )
 
 const (
@@ -25,7 +26,7 @@ var (
 
 	cfg = &Config{}
 
-	defaultConfg = `{"port":8888,"domain":"627.workarea8.live","md5js":"https://627.workarea8.live/js/md5.js","saveDir":"/data/91porn","aria2":{"uri":"http://172.17.0.1:6800/jsonrpc","token":"aabbccdd"},"pageType":"rf","pages":{"hot":"当前最热","rp":"最近得分","long":"10分钟以上","md":"本月讨论","tf":"本月收藏","mf":"收藏最多","rf":"最近加精","top":"本月最热"}}`
+	defaultConfg = `{"port":8888,"domain":"1003.workarea8.live","md5js":"https://1003.workarea8.live/js/md5.js","saveDir":"/data/91porn","aria2":{"uri":"http://172.17.0.1:6800/jsonrpc","token":"aabbccdd"},"pageType":"rf","pages":{"hot":"当前最热","rp":"最近得分","long":"10分钟以上","md":"本月讨论","tf":"本月收藏","mf":"收藏最多","rf":"最近加精","top":"本月最热"}}`
 )
 
 type Config struct {
@@ -107,13 +108,15 @@ func getPage(pageURL string, contents *[]Content) {
 	var contentURLs []string
 
 	// 获取内容页面的访问入口url
-	doc.Find(".listchannel a").Each(func(index int, item *goquery.Selection) {
-		linkTag := item
-		link, _ := linkTag.Attr("href")
-		title, _ := linkTag.Attr("title")
+	doc.Find(".row a").Each(func(index int, item *goquery.Selection) {
+		link, _ := item.Attr("href")
+		title, err := item.ChildrenFiltered("span").Html()
+		if err != nil {
+			fmt.Println("get title error : ", err)
+			return
+		}
 		if title != "" {
 			contentURLs = append(contentURLs, link)
-			//fmt.Println(link)
 		}
 	})
 

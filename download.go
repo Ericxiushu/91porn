@@ -35,7 +35,7 @@ func sendToAria2(content Content, wg *sync.WaitGroup) {
 		return
 	}
 
-	_, err = client.AddURI(content.videoURL, map[string]string{"out": videoFileName, "dir": cfg.SaveDir})
+	_, err = client.AddURI([]string{content.videoURL}, map[string]string{"out": videoFileName, "dir": cfg.SaveDir})
 	if err != nil {
 		fmt.Printf("add file %s to aria2 fail : %v , url : %s \n", content.title, err, content.videoURL)
 		return
