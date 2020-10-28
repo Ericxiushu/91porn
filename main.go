@@ -17,6 +17,7 @@ import (
 
 const (
 	USE_PROXY bool = false ///< 是否启用代理
+	VERSION        = "v0.0.2"
 )
 
 var (
@@ -162,7 +163,7 @@ func spider(pageType string, pageNums ...int) string {
 		wg.Add(1)
 		go sendToAria2(s, wg)
 
-		res.WriteString("===========================\n")
+		res.WriteString("============ " + VERSION + " ===============\n")
 		res.WriteString(fmt.Sprintf("页面地址:%s\n", s.contentURL))
 		res.WriteString(fmt.Sprintf("标题:%s\n", s.title))
 		res.WriteString(fmt.Sprintf("缩略图:%s\n", s.thumbURL))
