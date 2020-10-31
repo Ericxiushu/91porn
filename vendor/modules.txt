@@ -1,0 +1,32 @@
+# github.com/PuerkitoBio/goquery v1.6.0
+## explicit
+github.com/PuerkitoBio/goquery
+# github.com/andybalholm/cascadia v1.1.0
+github.com/andybalholm/cascadia
+# github.com/axgle/mahonia v0.0.0-20180208002826-3358181d7394
+## explicit
+github.com/axgle/mahonia
+# github.com/gorilla/websocket v1.4.0
+github.com/gorilla/websocket
+# github.com/robertkrimen/otto v0.0.0-20200922221731-ef014fd054ac
+## explicit
+github.com/robertkrimen/otto
+github.com/robertkrimen/otto/ast
+github.com/robertkrimen/otto/dbg
+github.com/robertkrimen/otto/file
+github.com/robertkrimen/otto/parser
+github.com/robertkrimen/otto/registry
+github.com/robertkrimen/otto/token
+# github.com/zyxar/argo v0.0.0-20201013023636-7eb154dcb009
+## explicit
+github.com/zyxar/argo/rpc
+# golang.org/x/net v0.0.0-20200202094626-16171245cfb2
+## explicit
+golang.org/x/net/html
+golang.org/x/net/html/atom
+golang.org/x/net/internal/socks
+golang.org/x/net/proxy
+# gopkg.in/sourcemap.v1 v1.0.5
+## explicit
+gopkg.in/sourcemap.v1
+gopkg.in/sourcemap.v1/base64vlq

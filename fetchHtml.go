@@ -133,12 +133,16 @@ var re = regexp.MustCompile("document\\.write\\(strencode\\(\"(.*?)\",\"(.*?)\",
 func fetchFromJS(jsStr string) string {
 
 	params := re.FindStringSubmatch(jsStr)
+	if len(params) < 4 {
+		return ""
+	}
 
 	vm := otto.New()
 	vm.Run(jsContent)
 	v, err := vm.Call("strencode", nil, params[1], params[2], params[3])
 	if err != nil {
-		panic(err)
+		fmt.Println("call strencode error : ", err)
+		return ""
 	}
 
 	dd := `<source [^>]*src=['"](?P<src>([^'"]+))[^>]*>`
