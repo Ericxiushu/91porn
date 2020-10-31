@@ -13,4 +13,4 @@ MAINTAINER linyuan
 COPY ./conf /91porn/conf
 COPY --from=golangBuild /output/91porn /91porn
 
-CMD /91porn/91porn 
+CMD nginx && aria2c --conf-path=/aria2/aria2.conf -D && /91porn/91porn 
