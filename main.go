@@ -17,7 +17,7 @@ import (
 
 const (
 	USE_PROXY bool = false ///< 是否启用代理
-	VERSION        = "v0.0.2"
+	VERSION        = "v0.0.3"
 )
 
 var (

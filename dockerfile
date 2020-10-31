@@ -1,19 +1,16 @@
-FROM alpine:latest
+FROM golang:1.15.3 as golangBuild
+
+RUN mkdir -p /output
+WORKDIR /output
+COPY ./  ./
+RUN GO111MODULE=on CGO_ENABLED=0 go build -mod=vendor -o 91porn
+
+FROM senlixiushu/91porn-runtime:0.0.1
 MAINTAINER linyuan
 
-RUN mkdir -p /91porn
+# RUN mkdir -p /91porn && mkdir -p /aria2 && mkdir -p /run/nginx
 
-COPY ./91porn /91porn
 COPY ./conf /91porn/conf
+COPY --from=golangBuild /output/91porn /91porn
 
-RUN apk add aria2 && apk add nginx
-
-RUN mkdir -p /aria2/aria2ng && mkdir -p /run/nginx
-COPY ./aria2.conf /aria2/aria2.conf
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
-COPY ./nginx/nginx_default.conf /etc/nginx/conf.d/default.conf
-COPY ./AriaNg-1.1.4.zip /aria2/AriaNg-1.1.4.zip
-RUN cd /aria2 && touch aria2.session && unzip AriaNg-1.1.4.zip -d ./aria2ng
-RUN cd /run/nginx && touch nginx.pid
-
-CMD nginx && aria2c --conf-path=/aria2/aria2.conf -D && /91porn/91porn 
+CMD /91porn/91porn 
